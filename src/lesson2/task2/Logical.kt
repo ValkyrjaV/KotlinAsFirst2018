@@ -91,6 +91,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  */
 fun max(m: Int, n: Int) = if (m > n) m else n
 fun min(m: Int, n: Int) = if (m < n) m else n
+
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
         when {
             (r != s) ->
