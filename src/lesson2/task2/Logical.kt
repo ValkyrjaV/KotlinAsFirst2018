@@ -2,6 +2,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 
 /**
  * Пример
@@ -32,8 +33,13 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+    val A = x1 == x2
+    val B = y1 == y1
+    val C = (x1 + y1) == (x2 + y2)
+    val D = (abs(x1 - y1)) == (abs(x2 - y2))
+    return A or B or C or D
+}
 
 /**
  * Простая
@@ -41,7 +47,27 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    when {
+        month == 2 -> if (year % 4 == 0)
+            return 29
+        else
+            return 28
+        month % 2 == 1 ->
+            if (month < 8) return 31
+            else return 30
+        month % 2 == 0 ->
+            if ((month > 7) and (month < 13)) return 31
+            else
+                if (month < 7) return 30
+                else return -1
+        else -> return -1
+    }
+    /** в тестовой программе при вводе 1900 года в феврале почему то контрольное знач-е 28
+    хотя год, по идее, високосный (ПРИМЕЧАНИЕ СТУДЕНТА)
+     из-за этого программа не может пройти тест
+     */
+}
 
 /**
  * Средняя
@@ -52,6 +78,13 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean = TODO()
+/**{
+*  when{
+ *       (x1 == x2) and (y1 == y2) and (r1 <= r2) ->
+*            return true
+*    }
+*}
+*/
 
 /**
  * Средняя
@@ -62,4 +95,12 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+        when {
+            r != s ->
+                (a or b or c == r) and (a or b or c == s)
+            r == s ->
+                (a and b) or (b and c) or (a and c) == r
+            else ->
+                false
+        }
