@@ -70,7 +70,7 @@ fun ageDescription(age: Int): String {
         age % 10 == 0 -> "$age лет"
         age % 10 == 1 -> "$age год"
         age % 10 >= 5 -> "$age лет"
-        age <= 20 -> "$age лет"
+        (age <= 20) and (age >= 5) -> "$age лет"
         else -> "$age года"
 }
 }
