@@ -70,7 +70,7 @@ fun ageDescription(age: Int): String {
         age % 10 == 0 -> "$age лет"
         age % 10 == 1 -> "$age год"
         age % 10 >= 5 -> "$age лет"
-        (age <= 20) and (age >= 5) -> "$age лет"
+        (age % 100 <= 20) and (age % 100 >= 5) -> "$age лет"
         else -> "$age года"
 }
 }
@@ -191,7 +191,12 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
             (a < c) and (d < b) -> return d - c
             (a > c) and (d < b) -> return d - a
             (a > c) and (d > b) -> return b - a
-            else -> return b - a
+            (a == c) and (d < b) -> return d - c
+            (a == c) and (d > b) -> return b - c
+            (b == d) and (a < c) -> return b - c
+            (b == d) and (a > c) -> return b - a
+            else ->
+                return d - c
         }
     }
 }
