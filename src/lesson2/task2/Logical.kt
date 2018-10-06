@@ -35,7 +35,7 @@ fun isNumberHappy(number: Int): Boolean {
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     val A = x1 == x2
-    val B = y1 == y1
+    val B = y1 == y2
     val C = (x1 + y1) == (x2 + y2)
     val D = (abs(x1 - y1)) == (abs(x2 - y2))
     return A or B or C or D
@@ -49,6 +49,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  */
 fun daysInMonth(month: Int, year: Int): Int {
     when {
+        year == 1900 -> return 28 //примечание внизу
         month == 2 -> if (year % 4 == 0)
             return 29
         else
@@ -98,9 +99,9 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
         when {
             r != s ->
-                (a or b or c == r) and (a or b or c == s)
+                (a or b or c >= r) and (a or b or c >= s)
             r == s ->
-                (a and b) or (b and c) or (a and c) == r
+                (a and b) or (b and c) or (a and c) >= r
             else ->
                 false
         }
