@@ -37,7 +37,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     val A = x1 == x2
     val B = y1 == y2
     val C = (x1 + y1) == (x2 + y2)
-    val D = (abs(x1 - y1)) == (abs(x2 - y2))
+    val D = (x1 - y1) == (x2 - y2)
     return A or B or C or D
 }
 
@@ -79,13 +79,6 @@ fun daysInMonth(month: Int, year: Int): Int {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean = TODO()
-/**{
-*  when{
- *       (x1 == x2) and (y1 == y2) and (r1 <= r2) ->
-*            return true
-*    }
-*}
-*/
 
 /**
  * Средняя
@@ -96,12 +89,24 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
+fun max(m: Int, n: Int) = if (m > n) m else n
+fun min(m: Int, n: Int) = if (m < n) m else n
+
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
         when {
-            r != s ->
-                (a or b or c >= r) and (a or b or c >= s)
+            (r != s) ->
+                when {
+                    (a <= max(r, s)) and (b <= max(r, s)) ->
+                        min(a, b) <= min(r, s)
+                    (b <= max(r, s)) and (c <= max(r, s)) ->
+                        min(b, c) <= min(r, s)
+                    (a <= max(r, s)) and (c <= max(r, s)) ->
+                        min(a, c) <= min(r, s)
+                    else ->
+                        false
+                }
             r == s ->
-                (a and b) or (b and c) or (a and c) >= r
+                (a and b) or (b and c) or (a and c) <= r
             else ->
                 false
         }
