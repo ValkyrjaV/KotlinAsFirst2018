@@ -11,7 +11,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -66,7 +66,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var n2 = n
+    if (n2 == 0) return 1
+    while (n2 > 0) {
+        n2 /= 10
+        count += 1
+    }
+    return count
+}
 
 /**
  * Простая
@@ -74,7 +83,18 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var sum = 1
+    var sum1 = 1
+    return if (n < 3) 1
+    else {
+        for (i in 3..n){
+            sum += sum1
+            sum1 = sum
+        }
+        sum
+    }
+}
 
 /**
  * Простая

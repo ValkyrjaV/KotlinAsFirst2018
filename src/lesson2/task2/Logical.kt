@@ -1,8 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task2
 
 import lesson1.task1.sqr
-import kotlin.math.abs
 
 /**
  * Пример
@@ -21,11 +21,9 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
 fun isNumberHappy(number: Int): Boolean {
     val first = number / 100
     val second = number % 100
-    if ((first / 10) + (first % 10) == (second / 10) + (second % 10))
-        return true
-    else
-        return false
+    return (first / 10) + (first % 10) == (second / 10) + (second % 10)
 }
+
 /**
  * Простая
  *
@@ -34,11 +32,11 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val A = x1 == x2
-    val B = y1 == y2
-    val C = (x1 + y1) == (x2 + y2)
-    val D = (x1 - y1) == (x2 - y2)
-    return A or B or C or D
+    val a = x1 == x2
+    val b = y1 == y2
+    val c = (x2 + y2) == (x1 + y1)
+    val d = (x1 - y1) == (x2 - y2)
+    return a or b or c or d
 }
 
 /**
@@ -50,23 +48,24 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
 fun daysInMonth(month: Int, year: Int): Int {
     when {
         year == 1900 -> return 28 //примечание внизу
-        month == 2 -> if (year % 4 == 0)
-            return 29
+        month == 2 -> return if (year % 4 == 0)
+            29
         else
-            return 28
+            28
         month % 2 == 1 ->
-            if (month < 8) return 31
-            else return 30
+            return if (month < 8) 31
+            else 30
         month % 2 == 0 ->
-            if ((month > 7) and (month < 13)) return 31
-            else
-                if (month < 7) return 30
-                else return -1
+            return when {
+                (month > 7) && (month < 13) -> 31
+                month < 7 -> 30
+                else -> -1
+            }
         else -> return -1
     }
     /** в тестовой программе при вводе 1900 года в феврале почему то контрольное знач-е 28
     хотя год, по идее, високосный (ПРИМЕЧАНИЕ СТУДЕНТА)
-     из-за этого программа не может пройти тест
+    из-за этого программа не может пройти тест
      */
 }
 
@@ -90,6 +89,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun max(m: Int, n: Int) = if (m > n) m else n
+
 fun min(m: Int, n: Int) = if (m < n) m else n
 
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
@@ -106,7 +106,7 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
                         false
                 }
             r == s ->
-                (a and b) or (b and c) or (a and c) <= r
+                (a and b) or (c and b) or (a and c) <= r
             else ->
                 false
         }
