@@ -88,6 +88,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
+
 fun max(m: Int, n: Int) = if (m > n) m else n
 
 fun min(m: Int, n: Int) = if (m < n) m else n
