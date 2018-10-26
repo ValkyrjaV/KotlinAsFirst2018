@@ -85,12 +85,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
     val interval = (t1 * v1 + t2 * v2 + t3 * v3) / 2.0
-    if (interval <= t1 * v1)
-        return (interval / v1)
-    return if (interval <= t1 * v1 + t2 * v2)
-        (t1 + ((interval - t1 * v1)) / v2)
-    else
-        (t1 + t2 + ((interval - t1 * v1 - t2 * v2) / v3))
+    return when {
+        (interval <= t1 * v1) -> (interval / v1)
+        (interval <= t1 * v1 + t2 * v2) -> (t1 + ((interval - t1 * v1)) / v2)
+        else ->
+            (t1 + t2 + ((interval - t1 * v1 - t2 * v2) / v3))
+    }
 }
 
 /**
@@ -109,14 +109,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     val b = kingY == rookY1
     val c = kingX == rookX2
     val d = kingY == rookY2
-    if ((a || b) && !(c || d))
-        return 1
-    if ((c || d) && !(a || b))
-        return 2
-    return if ((a || b) && (c || d))
-        3
-    else
-        0
+    return when {
+        ((a || b) && !(c || d)) -> 1
+        ((c || d) && !(a || b)) -> 2
+        ((a || b) && (c || d)) -> 3
+        else -> 0
+    }
 }
 
 /**
@@ -136,14 +134,12 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
     val b = kingY == rookY
     val c = (kingX + kingY) == (bishopX + bishopY)
     val d = (kingX - kingY) == (bishopX - bishopY)
-    if ((a || b) && !(c || d))
-        return 1
-    if ((c || d) && !(a || b))
-        return 2
-    return if ((a || b) && (c || d))
-        3
-    else
-        0
+    return when {
+        ((a || b) && !(c || d)) -> 1
+        ((c || d) && !(a || b)) -> 2
+        ((a || b) && (c || d)) -> 3
+        else -> 0
+    }
 }
 
 /**
@@ -160,12 +156,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val aNew = sqr(a)
     val bNew = sqr(b)
     val cNew = sqr(c)
-    if ((aNew + bNew == cNew) || (aNew + cNew == bNew) || (bNew + cNew == aNew))
-        return 1
-    return if ((aNew + bNew < cNew) || (aNew + cNew < bNew) || (bNew + cNew < aNew))
-        2
-    else
-        0
+    return if ((aNew + bNew == cNew) || (aNew + cNew == bNew) || (bNew + cNew == aNew)) 1
+    else if ((aNew + bNew < cNew) || (aNew + cNew < bNew) || (bNew + cNew < aNew)) 2
+    else 0
 }
 
 /**
@@ -177,12 +170,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {     //переделать с min и max
-    if ((c > b) || (d < a))
-        return -1
-    if ((c == b) || (d == a))
-        return 0
+    return if ((c > b) || (d < a)) -1
+    else if ((c == b) || (d == a)) 0
     else {
-        return when {
+        when {
             (a < c) && (d > b) -> b - c
             (a < c) && (d < b) -> d - c
             (a > c) && (d < b) -> d - a

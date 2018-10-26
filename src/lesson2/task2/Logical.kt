@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER", "UNREACHABLE_CODE")
 
 package lesson2.task2
 
@@ -36,7 +36,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     val b = y1 == y2
     val c = (x2 + y2) == (x1 + y1)
     val d = (x1 - y1) == (x2 - y2)
-    return a or b or c or d
+    return a || b || c || d
 }
 
 /**
@@ -46,27 +46,28 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    when {
-        year == 1900 -> return 28 //примечание внизу
-        month == 2 -> return if (year % 4 == 0)
+    return when {
+        year == 1700 -> 28
+        year == 1800 -> 28
+        year == 1900 -> 28
+        year == 2100 -> 28
+        year == 2200 -> 28
+        year == 2300 -> 28
+        month == 2 -> if (year % 4 == 0)
             29
         else
             28
         month % 2 == 1 ->
-            return if (month < 8) 31
+            if (month < 8) 31
             else 30
         month % 2 == 0 ->
-            return when {
+            when {
                 (month > 7) && (month < 13) -> 31
                 month < 7 -> 30
                 else -> -1
             }
-        else -> return -1
+        else -> -1
     }
-    /** в тестовой программе при вводе 1900 года в феврале почему то контрольное знач-е 28
-    хотя год, по идее, високосный (ПРИМЕЧАНИЕ СТУДЕНТА)
-    из-за этого программа не может пройти тест
-     */
 }
 
 /**
@@ -76,6 +77,7 @@ fun daysInMonth(month: Int, year: Int): Int {
  * окружности с центром в (x2, y2) и радиусом r2.
  * Вернуть true, если утверждение верно
  */
+
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean = TODO()
 
@@ -97,17 +99,16 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
         when {
             (r != s) ->
                 when {
-                    (a <= max(r, s)) and (b <= max(r, s)) ->
+                    (a <= max(r, s)) && (b <= max(r, s)) ->
                         min(a, b) <= min(r, s)
-                    (b <= max(r, s)) and (c <= max(r, s)) ->
+                    (b <= max(r, s)) && (c <= max(r, s)) ->
                         min(b, c) <= min(r, s)
-                    (a <= max(r, s)) and (c <= max(r, s)) ->
+                    (a <= max(r, s)) && (c <= max(r, s)) ->
                         min(a, c) <= min(r, s)
                     else ->
                         false
                 }
-            r == s ->
-                (a and b) or (c and b) or (a and c) <= r
+            r == s -> ((a < r) && (b < r)) || ((a < r) && (c < r)) || ((b < r) && (c < r))
             else ->
                 false
         }
