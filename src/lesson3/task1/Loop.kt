@@ -74,7 +74,7 @@ fun digitNumber(n: Int): Int {
     var count = 0
     var n2 = n
     if (n2 == 0) return 1
-    while (n2 !== 0) {
+    while (n2 != 0) {
         n2 /= 10
         count += 1
     }
@@ -109,7 +109,13 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = max(m, n)
+    while ((k % m != 0) || (k % n != 0)) {
+        k++
+    }
+    return k
+}
 
 
 /**
@@ -228,7 +234,22 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var number = 0
+    var count = 0
+    var copyn = n
+    while (copyn > 0) {
+        count++
+        copyn /= 10
+    }
+    copyn = n
+    for (i in 1..count) {
+        val last = copyn % 10
+        number = number * 10 + last
+        copyn /= 10
+    }
+    return number
+}
 
 /**
  * Средняя
@@ -239,7 +260,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = (n == revert(n))
 
 /**
  * Средняя
@@ -250,6 +271,26 @@ fun isPalindrome(n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean = TODO()
+/*{
+    var count = 0
+    var copyn = n
+    while (copyn > 0) {
+        count++
+        copyn /= 10
+    }
+    return if (count == 1) true
+    else {
+        var a = true
+        copyn = n
+        for (i in 1..count) {
+            if ((n % 10) != (copyn % 10)) {
+                a = false
+                break
+            } else copyn /= 10
+        }
+        a
+    }
+} */
 
 /**
  * Сложная
@@ -260,7 +301,29 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var rang = 0
+    var number = 1
+    while (rang < n) {
+        var sqr = number * number
+        var count = 0
+        while (sqr > 0) {
+            count++
+            sqr /= 10
+        }
+        rang += count
+        if (rang < n)
+            number++
+    }
+    return if (rang == n) ((number * number) % 10)
+    else {
+        var sqr2 = number * number
+        for (i in 1..(rang - n)) {
+            sqr2 /= 10
+        }
+        sqr2 % 10
+    }
+}
 
 /**
  * Сложная
@@ -271,4 +334,26 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var rang = 0
+    var number = 1
+    while (rang < n) {
+        var sqr = fib(number)
+        var count = 0
+        while (sqr > 0) {
+            count++
+            sqr /= 10
+        }
+        rang += count
+        if (rang < n)
+            number++
+    }
+    return if (rang == n) ((fib(number)) % 10)
+    else {
+        var sqr2 = fib(number)
+        for (i in 1..(rang - n)) {
+            sqr2 /= 10
+        }
+        sqr2 % 10
+    }
+}
