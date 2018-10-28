@@ -143,14 +143,13 @@ fun mean(list: List<Double>): Double {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
-/*{
+fun center(list: MutableList<Double>): MutableList<Double> {
     if (list.isNotEmpty())
         for (i in 0 until list.size) {
-            list[i] -= mean(list)
+            list[i] -= mean(list).toInt().toDouble()
         }
     return list
-}*/
+}
 
 /**
  * Средняя
@@ -248,7 +247,19 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var copyn = n
+    val new = mutableListOf<Int>()
+    while (copyn > 0) {
+        new.add(copyn % base)
+        copyn /= base
+    }
+    val result = mutableListOf<Int>()
+    for (i in 0 until new.size) {
+        result.add(0, new[i])
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -259,6 +270,18 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String = TODO()
+/*{
+    val new = convert(n, base)
+    val alpha = ("abcdefghijklmnopqrtuvwxyz")
+    var help = ("")
+    for (i in 0..new.size) {
+        if (new[i] > 9) {
+            help += (alpha[new[i] - 10])
+        } else
+            help += new[i].toString()
+    }
+    return help
+}*/
 
 /**
  * Средняя
