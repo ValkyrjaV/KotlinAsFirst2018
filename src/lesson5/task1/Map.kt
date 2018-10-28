@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import java.util.*
+
 /**
  * Пример
  *
@@ -107,6 +109,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+/*{
+    val new = mutableMapOf<Int, String>()
+}*/
 
 /**
  * Простая
@@ -196,7 +201,14 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TO
  *
  * Для двух списков людей найти людей, встречающихся в обоих списках
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
+    val set1 = mutableSetOf<String>()
+    for (element in a) {
+        set1.add(element)
+    }
+    set1.retainAll(b)
+    return set1.toList()
+}
 
 /**
  * Средняя
