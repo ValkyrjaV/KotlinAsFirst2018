@@ -277,7 +277,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         count++
         copyn /= 10
     }
-    return if (count == 1) true
+    return if (count == 1) false
     else {
         val ex = n % 10
         var a = false
