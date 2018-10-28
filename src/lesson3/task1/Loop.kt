@@ -270,8 +270,7 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
-/*{
+fun hasDifferentDigits(n: Int): Boolean {
     var count = 0
     var copyn = n
     while (copyn > 0) {
@@ -280,17 +279,16 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
     }
     return if (count == 1) true
     else {
-        var a = true
+        val ex = n % 10
+        var a = false
         copyn = n
         for (i in 1..count) {
-            if ((n % 10) != (copyn % 10)) {
-                a = false
-                break
-            } else copyn /= 10
+            if ((copyn % 10) != ex) a = true
+            copyn /= 10
         }
         a
     }
-} */
+}
 
 /**
  * Сложная
