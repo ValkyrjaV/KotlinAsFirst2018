@@ -270,11 +270,19 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
-/*{
-    val const = ("abcdefghijklmnopqrstuvwzyx")
-
-}*/
+fun convertToString(n: Int, base: Int): String {
+    val const = ("abcdefghijklmnopqrstuvwxyz")
+    val before = convert(n, base)
+    val new = mutableListOf(String())
+    for (i in 0 until before.size) {
+        if (before[i] < 10)
+            new.add(before[i].toString())
+        else {
+            new.add((const[before[i] - 10]).toString())
+        }
+    }
+    return new.joinToString(separator = "")
+}
 
 /**
  * Средняя
