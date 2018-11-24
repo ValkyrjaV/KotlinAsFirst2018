@@ -110,11 +110,14 @@ fun fib(n: Int): Int {
  */
 
 fun lcm(m: Int, n: Int): Int {
-    var k = max(m, n)
-    while ((k % m != 0) || (k % n != 0)) {
-        k++
-    }
-    return k
+    val small = min(m, n)
+    val big = max(m, n)
+    var lcm = big
+
+    while (lcm % small != 0)
+        lcm += big
+
+    return lcm
 }
 
 
@@ -124,16 +127,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var a = false
-    var b = 0
     for (i in 2..n)
-        if (n % i == 0) {
-            b = i
-            a = true
-            break
-        } else continue
-    return if (a) b
-    else n
+        if (n % i == 0)
+            return i
+        else continue
+    return n
 }
 
 /**
@@ -141,17 +139,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var a = false
-    var b = 0
-    for (i in (n - 1) downTo 1) if (n % i == 0) {
-        b = i
-        a = true
-        break
-    } else continue
-    return if (a) b
-    else n
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -236,14 +224,8 @@ fun cos(x: Double, eps: Double): Double = TODO()
  */
 fun revert(n: Int): Int {
     var number = 0
-    var count = 0
     var copyn = n
-    while (copyn > 0) {
-        count++
-        copyn /= 10
-    }
-    copyn = n
-    for (i in 1..count) {
+    for (i in 1..digitNumber(n)) {
         val last = copyn % 10
         number = number * 10 + last
         copyn /= 10
@@ -271,18 +253,12 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var count = 0
-    var copyn = n
-    while (copyn > 0) {
-        count++
-        copyn /= 10
-    }
-    return if (count == 1) false
+    return if (digitNumber(n) == 1) false
     else {
         val ex = n % 10
         var a = false
-        copyn = n
-        for (i in 1..count) {
+        var copyn = n
+        for (i in 1..digitNumber(n)) {
             if ((copyn % 10) != ex) a = true
             copyn /= 10
         }
@@ -303,13 +279,8 @@ fun squareSequenceDigit(n: Int): Int {
     var rang = 0
     var number = 1
     while (rang < n) {
-        var sqr = number * number
-        var count = 0
-        while (sqr > 0) {
-            count++
-            sqr /= 10
-        }
-        rang += count
+        val sqr = number * number
+        rang += digitNumber(sqr)
         if (rang < n)
             number++
     }
@@ -336,13 +307,8 @@ fun fibSequenceDigit(n: Int): Int {
     var rang = 0
     var number = 1
     while (rang < n) {
-        var sqr = fib(number)
-        var count = 0
-        while (sqr > 0) {
-            count++
-            sqr /= 10
-        }
-        rang += count
+        val sqr = fib(number)
+        rang += digitNumber(sqr)
         if (rang < n)
             number++
     }

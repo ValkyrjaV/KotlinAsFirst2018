@@ -108,10 +108,18 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
-/*{
-    val new = mutableMapOf<Int, String>()
-}*/
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val new = mutableMapOf<Int, MutableList<String>>()
+    for (i in 1..5) {
+        if (grades.containsValue(i)) new[i] = mutableListOf()
+    }
+    val newlist = grades.keys
+    for (element in newlist) {
+        new[grades[element]]?.add(element)
+    }
+    return new
+} // не проходит тест потому что другой порядок имён в списке. Не очень понимаю, по какому критерию
+  // строится сортировка в тесте, поэтому не могу нормально исправить
 
 /**
  * Простая
@@ -123,7 +131,9 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean =
+        a.all { (key, value) -> b[key] == value }
+
 
 /**
  * Средняя
@@ -179,6 +189,16 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *        )
  */
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+/**{
+    val people = friends.keys
+    val check = mutableMapOf<String, Boolean>()
+    for (element in people) {
+        check[ element] = true
+    }
+    for (item in friends) {
+
+    }
+} */
 
 /**
  * Простая
@@ -225,7 +245,10 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val charslower = chars.map { it.toLowerCase() }
+    return word.all { it in charslower }
+}
 
 /**
  * Средняя
@@ -239,7 +262,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> = list
+        .groupingBy { it }
+        .eachCount()
+        .filterValues { it != 1 }
 
 /**
  * Средняя
@@ -269,7 +295,14 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    if (list.isEmpty()) return -1 to -1
+    for (i in 0 until (list.size / 2)) {
+        val ex = number - list[i]
+        if (ex in list) return i to list.indexOf(ex)
+    }
+    return -1 to -1
+}
 
 /**
  * Очень сложная

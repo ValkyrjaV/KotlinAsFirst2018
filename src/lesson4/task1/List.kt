@@ -121,8 +121,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     val newlist = v.map { it * it }
-    return if (newlist.isNotEmpty()) sqrt(newlist.sum())
-    else 0.0
+    return sqrt(newlist.sum())
 }
 
 /**
@@ -130,10 +129,9 @@ fun abs(v: List<Double>): Double {
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    return if (list.isNotEmpty()) (list.sum() / list.size)
-    else 0.0
-}
+fun mean(list: List<Double>): Double =
+        if (list.isNotEmpty()) (list.sum() / list.size)
+        else 0.0
 
 /**
  * Средняя
@@ -145,10 +143,9 @@ fun mean(list: List<Double>): Double {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val a = mean(list)
-    if (list.isNotEmpty())
-        for (i in 0 until list.size) {
-            list[i] -= a
-        }
+    for (i in 0 until list.size) {
+        list[i] -= a
+    }
     return list
 }
 
