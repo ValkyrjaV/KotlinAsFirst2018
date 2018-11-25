@@ -5,6 +5,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -169,19 +170,24 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =     //переделать с min и max
-        when {
-            ((c > b) || (d < a)) -> -1
-            ((c == b) || (d == a)) -> 0
-            (a < c) && (d > b) -> b - c
-            (a < c) && (d < b) -> d - c
-            (a > c) && (d < b) -> d - a
-            (a > c) && (d > b) -> b - a
-            (a == c) && (d < b) -> d - c
-            (a == c) && (d > b) -> b - c
-            (b == d) && (a < c) -> b - c
-            (b == d) && (a > c) -> b - a
-            else ->
-                d - c
-        }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    val first = max(a, c)
+    val second = min(b, d)
+    return max(second - first, -1)
+}
 
+/** =     //переделать с min и max
+when {
+    ((c > b) || (d < a)) -> -1
+    ((c == b) || (d == a)) -> 0
+    (a < c) && (d > b) -> b - c
+    (a < c) && (d < b) -> d - c
+    (a > c) && (d < b) -> d - a
+    (a > c) && (d > b) -> b - a
+    (a == c) && (d < b) -> d - c
+    (a == c) && (d > b) -> b - c
+    (b == d) && (a < c) -> b - c
+    (b == d) && (a > c) -> b - a
+    else ->
+    d - c
+} */
