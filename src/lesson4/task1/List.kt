@@ -152,12 +152,12 @@ fun center(list: MutableList<Double>): MutableList<Double> {
 
 @Suppress("NAME_SHADOWING")
         /**
- * Средняя
- *
- * Найти скалярное произведение двух векторов равной размерности,
- * представленные в виде списков a и b. Скалярное произведение считать по формуле:
- * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
- */
+         * Средняя
+         *
+         * Найти скалярное произведение двух векторов равной размерности,
+         * представленные в виде списков a и b. Скалярное произведение считать по формуле:
+         * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
+         */
 fun times(a: List<Double>, b: List<Double>): Double =
         if ((a.isNotEmpty()) && (b.isNotEmpty()))
             a.zip(b) { a, b -> a * b }.sum()
@@ -171,15 +171,14 @@ fun times(a: List<Double>, b: List<Double>): Double =
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double {
-    return if (p.isNotEmpty()) {
-        val newp = mutableListOf(p[0])
-        for (i in 1 until p.size) {
-            newp.add(p[i] * x.pow(i))
-        }
-        newp.sum()
-    } else 0.0
-}
+fun polynom(p: List<Double>, x: Double): Double =
+        if (p.isNotEmpty()) {
+            val newp = mutableListOf(p[0])
+            for (i in 1 until p.size) {
+                newp.add(p[i] * x.pow(i))
+            }
+            newp.sum()
+        } else 0.0
 
 /**
  * Средняя
@@ -216,8 +215,9 @@ fun factorize(n: Int): List<Int> =
             val result = mutableListOf<Int>()
             var copyn = n
             while (copyn > 1) {
-                result.add(minDivisor(copyn))
-                copyn /= minDivisor(copyn)
+                val div = minDivisor(copyn)
+                result.add(div)
+                copyn /= div
             }
             result.sorted().toList()
         }
