@@ -130,7 +130,6 @@ fun minDivisor(n: Int): Int {
     for (i in 2..n)
         if (n % i == 0)
             return i
-        else continue
     return n
 }
 
@@ -154,7 +153,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
         if ((n % i == 0) && (m % i == 0)) {
             a = false
             break
-        } else continue
+        }
     }
     return a
 }
@@ -252,19 +251,18 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean {
-    return if (digitNumber(n) == 1) false
-    else {
-        val ex = n % 10
-        var a = false
-        var copyn = n
-        for (i in 1..digitNumber(n)) {
-            if ((copyn % 10) != ex) a = true
-            copyn /= 10
+fun hasDifferentDigits(n: Int): Boolean =
+        if (digitNumber(n) == 1) false
+        else {
+            val ex = n % 10
+            var a = false
+            var copyn = n
+            for (i in 1..digitNumber(n)) {
+                if ((copyn % 10) != ex) a = true
+                copyn /= 10
+            }
+            a
         }
-        a
-    }
-}
 
 /**
  * Сложная

@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.isPrime
+import lesson3.task1.minDivisor
 import java.lang.Math.pow
 import kotlin.math.exp
 import kotlin.math.pow
@@ -156,15 +157,14 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double {
-    return if ((a.isNotEmpty()) && (b.isNotEmpty())) {
-        val c = mutableListOf<Double>()
-        for (i in 0 until a.size) {
-            c.add(a[i] * b[i])
-        }
-        c.sum()
-    } else 0.0
-}
+fun times(a: List<Double>, b: List<Double>): Double =
+        if ((a.isNotEmpty()) && (b.isNotEmpty())) {
+            val c = mutableListOf<Double>()
+            for (i in 0 until a.size) {
+                c.add(a[i] * b[i])
+            }
+            c.sum()
+        } else 0.0
 
 /**
  * Средняя
@@ -213,21 +213,17 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> {
-    return if (isPrime(n)) listOf(n)
-    else {
-        val result = mutableListOf<Int>()
-        var copyn = n
-        for (i in 2..(n / 2)) {
-            if ((isPrime(i)) && (copyn % i == 0))
-                while (copyn % i == 0) {
-                    result.add(i)
-                    copyn /= i
-                }
+fun factorize(n: Int): List<Int> =
+        if (isPrime(n)) listOf(n)
+        else {
+            val result = mutableListOf<Int>()
+            var copyn = n
+            while (copyn > 1) {
+                result.add(minDivisor(copyn))
+                copyn /= minDivisor(copyn)
+            }
+            result.sorted().toList()
         }
-        result.sorted().toList()
-    }
-}
 
 /**
  * Сложная
@@ -253,11 +249,7 @@ fun convert(n: Int, base: Int): List<Int> {
         new.add(copyn % base)
         copyn /= base
     }
-    val result = mutableListOf<Int>()
-    for (i in 0 until new.size) {
-        result.add(0, new[i])
-    }
-    return result
+    return new.reversed()
 }
 
 /**
