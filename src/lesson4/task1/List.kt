@@ -150,7 +150,8 @@ fun center(list: MutableList<Double>): MutableList<Double> {
     return list
 }
 
-/**
+@Suppress("NAME_SHADOWING")
+        /**
  * Средняя
  *
  * Найти скалярное произведение двух векторов равной размерности,
@@ -158,13 +159,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double =
-        if ((a.isNotEmpty()) && (b.isNotEmpty())) {
-            val c = mutableListOf<Double>()
-            for (i in 0 until a.size) {
-                c.add(a[i] * b[i])
-            }
-            c.sum()
-        } else 0.0
+        if ((a.isNotEmpty()) && (b.isNotEmpty()))
+            a.zip(b) { a, b -> a * b }.sum()
+        else 0.0
 
 /**
  * Средняя
