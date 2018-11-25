@@ -204,7 +204,7 @@ fun plusMinus(expression: String): Int {
     for (i in 0..(parts.size - 2)) {
         if ((parts.size == 1) && (numberproov(expression)))
             return expression.toInt()
-        else if ((parts.size == 1))
+        if (!(numberproov(parts[0]) || !(numberproov(parts[parts.size - 1]))))
             throw Exception()
         if (!(numberproov(parts[i])) && (parts[i] !in signs))
             throw Exception()
