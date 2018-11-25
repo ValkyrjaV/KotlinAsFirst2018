@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -69,7 +71,26 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val month = listOf(
+            "января", "февраля", "марта", "апреля",
+            "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря")
+    val parts = str.split(" ")
+    return try {
+        if (parts[1] !in month)
+            throw Exception()
+        if (parts.size != 3) throw Exception()
+        val monthnumber = month.indexOf(parts[1]) + 1
+        if (daysInMonth(monthnumber, parts[2].toInt()) < parts[0].toInt())
+            throw Exception()
+        String.format("%02d.%02d.%d", parts[0].toInt(), monthnumber, parts[2].toInt())
+    } catch (e: Exception) {
+        ""
+    } catch (e: NumberFormatException) {
+        ""
+    }
+}
 
 /**
  * Средняя
@@ -81,7 +102,26 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val month = listOf(
+            "января", "февраля", "марта", "апреля",
+            "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря")
+    val parts = digital.split(".")
+    return try {
+        if (parts[1].toInt() !in 1..12) throw Exception()
+        if (parts.size != 3) throw Exception()
+        val a = parts[1].toInt() - 1
+        val monthname = month[a]
+        if (daysInMonth(parts[1].toInt(), parts[2].toInt()) < parts[0].toInt())
+            throw Exception()
+        String.format("%d %s %d", parts[0].toInt(), monthname, parts[2].toInt())
+    } catch (e: Exception) {
+        ""
+    } catch (e: NumberFormatException) {
+        ""
+    }
+}
 
 /**
  * Средняя
@@ -95,7 +135,24 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val symbols = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "(", ")",
+            "+", "-", " ")
+    val resultsym = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+")
+    return try {
+        val result = mutableListOf<String>()
+        for (element in phone)
+            if (element.toString() !in symbols)
+                throw Exception()
+            else {
+                if (element.toString() in resultsym)
+                    result.add(element.toString())
+            }
+        return result.joinToString(separator = "")
+    } catch (e: Exception) {
+        ""
+    }
+}
 
 /**
  * Средняя
@@ -130,7 +187,42 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun numberproov (a: String): Boolean {
+    val numbers = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+    var f = true
+    for (elem in a) {
+        if (elem.toString() in numbers) continue
+        else
+            f = false
+    }
+    return f
+}
+
+fun plusMinus(expression: String): Int {
+    val parts = expression.split(" ")
+    val signs = listOf("+", "-")
+    try {
+        for (i in 0..(parts.size - 2)) {
+            if (!(numberproov(parts[i])) && (parts[i] !in signs))
+                throw Exception()
+            if (parts.size == 1)
+                return expression.toInt()
+            if ((numberproov(parts[i])) && (numberproov(parts[i + 1])))
+                throw Exception()
+            if ((parts[i] in signs) && (parts[i + 1] in signs))
+                throw Exception()
+        }
+        var result:Int = parts[0].toInt()
+        for (i in 0..(parts.size - 3) step 2)
+            result = if (parts[i + 1] == "+")
+                result + parts[i + 2].toInt()
+            else
+                result - parts[i + 2].toInt()
+        return result
+    } catch (e: Exception) {
+        throw java.lang.IllegalArgumentException()
+    }
+}
 
 /**
  * Сложная
