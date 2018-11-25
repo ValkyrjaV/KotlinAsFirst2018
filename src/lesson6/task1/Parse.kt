@@ -187,7 +187,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun numberproov (a: String): Boolean {
+fun numberproov(a: String): Boolean {
     val numbers = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
     var f = true
     for (elem in a) {
@@ -201,18 +201,20 @@ fun numberproov (a: String): Boolean {
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     val signs = listOf("+", "-")
+    for (i in 0..(parts.size - 2)) {
+        if ((parts.size == 1) && (numberproov(expression)))
+            return expression.toInt()
+        else if ((parts.size == 1))
+            throw Exception()
+        if (!(numberproov(parts[i])) && (parts[i] !in signs))
+            throw Exception()
+        if ((numberproov(parts[i])) && (numberproov(parts[i + 1])))
+            throw Exception()
+        if ((parts[i] in signs) && (parts[i + 1] in signs))
+            throw Exception()
+    }
     try {
-        for (i in 0..(parts.size - 2)) {
-            if (!(numberproov(parts[i])) && (parts[i] !in signs))
-                throw Exception()
-            if (parts.size == 1)
-                return expression.toInt()
-            if ((numberproov(parts[i])) && (numberproov(parts[i + 1])))
-                throw Exception()
-            if ((parts[i] in signs) && (parts[i + 1] in signs))
-                throw Exception()
-        }
-        var result:Int = parts[0].toInt()
+        var result: Int = parts[0].toInt()
         for (i in 0..(parts.size - 3) step 2)
             result = if (parts[i + 1] == "+")
                 result + parts[i + 2].toInt()
