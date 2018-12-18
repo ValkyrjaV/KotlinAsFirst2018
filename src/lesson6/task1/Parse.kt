@@ -176,7 +176,17 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val parts = jumps.split(" ")
+    var res = -1
+    try {
+        for (i in 1 until parts.size step 2)
+            if (("+" in parts[i]) && res < (parts[i - 1].toInt())) res = parts[i - 1].toInt()
+    } catch (e: NumberFormatException) {
+        return -1
+    }
+    return res
+}
 
 /**
  * Сложная
@@ -189,13 +199,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  */
 fun numberproov(a: String): Boolean {
     val numbers = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-    var f = true
-    for (elem in a) {
-        if (elem.toString() in numbers) continue
-        else
-            f = false
-    }
-    return f
+    return a.all { it.toString() in numbers }
 }
 
 fun plusMinus(expression: String): Int {
@@ -204,7 +208,7 @@ fun plusMinus(expression: String): Int {
     for (i in 0..(parts.size - 2)) {
         if ((parts.size == 1) && (numberproov(expression)))
             return expression.toInt()
-        if (!(numberproov(parts[0]) || !(numberproov(parts[parts.size - 1]))))
+        if (!numberproov(parts[0]) || (!numberproov(parts[parts.size - 1])))
             throw Exception()
         if (!(numberproov(parts[i])) && (parts[i] !in signs))
             throw Exception()
@@ -222,7 +226,7 @@ fun plusMinus(expression: String): Int {
                 result - parts[i + 2].toInt()
         return result
     } catch (e: Exception) {
-        throw java.lang.IllegalArgumentException()
+        throw IllegalArgumentException()
     }
 }
 
@@ -235,7 +239,15 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.toLowerCase().split(" ")
+    var index = 0
+    for (i in 1 until parts.size) {
+        if (parts[i - 1] == parts[i]) return index
+        index += parts[i - 1].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -248,7 +260,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = description.split("; ")
+    var max = 0.0
+    var res = ""
+    try {
+        for (str in parts) {
+            val wares = str.split(" ")
+            if (wares.size != 2) return ""
+            if (wares[1].toDouble() > max){
+                res = wares[0]
+                max = wares[1].toDouble()
+            }
+
+        }
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return res
+}
 
 /**
  * Сложная

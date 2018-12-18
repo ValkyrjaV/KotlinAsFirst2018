@@ -119,7 +119,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     }
     return new
 } // не проходит тест потому что другой порядок имён в списке. Не очень понимаю, по какому критерию
-  // строится сортировка в тесте, поэтому не могу нормально исправить
+// строится сортировка в тесте, поэтому не могу нормально исправить
 
 /**
  * Простая
@@ -162,7 +162,17 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var sum: Double? = null
+    var title: String? = null
+    for ((name, pair) in stuff) {
+        if (pair.first == kind && ((sum == null) || (sum > pair.second))) {
+            sum = pair.second
+            title = name
+        }
+    }
+    return title
+}
 
 /**
  * Сложная
@@ -190,14 +200,14 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  */
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 /**{
-    val people = friends.keys
-    val check = mutableMapOf<String, Boolean>()
-    for (element in people) {
-        check[ element] = true
-    }
-    for (item in friends) {
+val people = friends.keys
+val check = mutableMapOf<String, Boolean>()
+for (element in people) {
+check[ element] = true
+}
+for (item in friends) {
 
-    }
+}
 } */
 
 /**
@@ -247,7 +257,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     val charslower = chars.map { it.toLowerCase() }
-    return word.all { it in charslower }
+    return word.toLowerCase().all { it in charslower }
 }
 
 /**
@@ -276,7 +286,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> = list
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    val sum = mutableSetOf<Set<Char>>()
+    for (elem in words) sum.add(elem.toLowerCase().toSet())
+    return (sum.size != words.size)
+}
 
 /**
  * Сложная
@@ -299,7 +313,8 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     if (list.isEmpty()) return -1 to -1
     for (i in 0 until (list.size / 2)) {
         val ex = number - list[i]
-        if (ex in list) return i to list.indexOf(ex)
+        if (list[i] <= number)
+            if (ex in list) return i to list.indexOf(ex)
     }
     return -1 to -1
 }
