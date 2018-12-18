@@ -268,7 +268,7 @@ fun mostExpensive(description: String): String {
         for (str in parts) {
             val wares = str.split(" ")
             if (wares.size != 2) return ""
-            if (wares[1].toDouble() > max){
+            if (wares[1].toDouble() >= max){
                 res = wares[0]
                 max = wares[1].toDouble()
             }
