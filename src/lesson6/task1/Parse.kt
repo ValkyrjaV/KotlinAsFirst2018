@@ -139,19 +139,15 @@ fun flattenPhoneNumber(phone: String): String {
     val symbols = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "(", ")",
             "+", "-", " ")
     val resultsym = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+")
-    return try {
-        val result = mutableListOf<String>()
-        for (element in phone)
-            if (element.toString() !in symbols)
-                throw Exception()
-            else {
-                if (element.toString() in resultsym)
-                    result.add(element.toString())
-            }
-        return result.joinToString(separator = "")
-    } catch (e: Exception) {
-        ""
-    }
+    val result = mutableListOf<String>()
+    for (element in phone)
+        if (element.toString() !in symbols)
+            return ""
+        else {
+            if (element.toString() in resultsym)
+                result.add(element.toString())
+        }
+    return result.joinToString(separator = "")
 }
 
 /**
@@ -268,7 +264,7 @@ fun mostExpensive(description: String): String {
         for (str in parts) {
             val wares = str.split(" ")
             if (wares.size != 2) return ""
-            if (wares[1].toDouble() >= max){
+            if (wares[1].toDouble() >= max) {
                 res = wares[0]
                 max = wares[1].toDouble()
             }
